@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  email           String   @unique
+  name            String?
+  avatarUrl       String?
+  hashedPassword  String?
+  
+
+  // Relations
+  conversationIds String[] @db.ObjectId
+  conversations Conversation[] @relation(fields: [conversationIds], references: [id])
+  
+  messages Message[]
+  oauthAccounts   OauthAccount[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model OauthAccount {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  providerId      String
+  providerUserId  String
+  userId          String @db.ObjectId
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // Relations
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Unique constraint
+  @@unique([providerId, providerUserId])
+
+
+}
+
+
+model Conversation {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt       DateTime @default(now())
+  lastMessageAt DateTime @default(now())
+  name String?
+  isGroup Boolean?
+  
+  messagesIds String[] @db.ObjectId
+  messages Message[]
+
+  userIds String[] @db.ObjectId
+  users User[] @relation(fields: [userIds], references: [id])
+}
+
+model Message {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  body String?
+  image String?
+  createdAt DateTime @default(now())
+
+
+  conversationId String @db.ObjectId
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  
+  senderId String @db.ObjectId 
+  sender User @relation(fields: [senderId], references: [id], onDelete: Cascade)
+}
