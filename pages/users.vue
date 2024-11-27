@@ -1,8 +1,5 @@
 <template>
-    <div>
-        <pre>{{ user }}</pre>
-        <button @click="logout" >Logout</button>
-    </div>
+    
 </template>
 
 <script setup lang="ts">
@@ -10,7 +7,8 @@
 const { user, clear } = useUserSession();
 
 definePageMeta({
-    middleware: 'protected'
+    middleware: 'protected',
+    layout: 'users'
 })
 
 const logout = async () => {
