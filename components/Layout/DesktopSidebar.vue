@@ -10,30 +10,45 @@
                         <li @click="handleClick(item)">
                             <div class="group flex gap-x-3 rounded-full p-3 text-sm leading-6 font-semibold text-gray-700 hover:bg-gray-100 hover:text-primary dark:text-white dark:hover:bg-gray-700 dark:hover:text-primary"
                                 :class="{ 'bg-gray-100 text-primary dark:bg-gray-700 dark:text-white': item.active }">
-                                <Icon :name="item.icon" class="h-5 w-5 shrink-0" ></Icon>
-                                <span class="sr-only" >{{ item.label }}</span>
+                                <Icon :name="item.icon" class="h-5 w-5 shrink-0"></Icon>
+                                <span class="sr-only">{{ item.label }}</span>
                             </div>
                         </li>
                     </UTooltip>
                 </ul>
             </nav>
+            <!--  -->
+
+            <div class=" mt-4 flex space-y-2 justify-between items-center">
+                <div @click="isOpen = true" class="cursor-pointer hover:opacity-75 transition">
+                    <!-- @vue-expect-error -->
+                    <Avatar :user="user"></Avatar>
+                </div>
+
+            </div>
         </div>
 
     </div>
+
+    <SettingsModal :is-open="isOpen" @close-modal="isOpen = false"></SettingsModal>
 </template>
 
 <script setup lang="ts">
 
 const { routes } = useRoutes();
+const { user } = useUserSession();
+
+const isOpen = ref(false);
 
 const handleClick = (item: any) => {
     console.log(item);
-    
+
     if (item.onClick) {
         return item.onClick();
     }
     return navigateTo(`${item.href}`)
 }
+
 
 </script>
 

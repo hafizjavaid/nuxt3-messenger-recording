@@ -24,10 +24,34 @@ defineProps<{
     user: User
 }>();
 
+const { isLoading, toggleLoading, showError } = useStore();
 
 const handleClick = async (id: string) => {
 
-    console.log(id);
+    try {
+
+        toggleLoading(true);
+        const data = await $fetch('/api/conversations', {
+            method: 'POST',
+            body: {
+                userId: id
+            }
+        })
+
+        if (data) {
+            console.log(data);
+
+        }
+
+    } catch (error) {
+
+        const err = handleError(error);
+        showError(err);
+
+    } finally {
+
+        toggleLoading(false)
+    }
 
 
 }

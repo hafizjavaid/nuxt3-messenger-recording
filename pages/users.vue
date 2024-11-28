@@ -1,5 +1,5 @@
 <template>
-    
+    <Empty :label="'Select a user or start a new conversation'"></Empty>
 </template>
 
 <script setup lang="ts">

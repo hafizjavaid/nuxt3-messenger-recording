@@ -11,10 +11,13 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
-      
+      uploadPreset: ''
     },
     githubId: '',
-    githubSecret: ''
+    githubSecret: '',
+    cloudinaryApiKey: '',
+    cloudinaryApiSecret: '',
+    cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
   },
   colorMode: {
     preference: 'light'
