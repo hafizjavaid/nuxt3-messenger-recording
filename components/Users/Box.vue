@@ -38,9 +38,8 @@ const handleClick = async (id: string) => {
             }
         })
 
-        if (data) {
-            console.log(data);
-
+        if (data?.id) {
+            navigateTo(`/conversations/${data.id}`)
         }
 
     } catch (error) {

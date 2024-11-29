@@ -10,7 +10,52 @@ export default defineEventHandler(async (event) => {
     if (session.user) {
 
 
-        const { userId } = await readBody(event);
+        const { userId, isGroup, members, name } = await readBody(event);
+
+        console.log(members);
+
+
+        if (isGroup && (!members || members.length < 2 || !name)) {
+
+            throw createError({
+                statusCode: 400,
+                statusMessage: 'Fields are missing'
+            })
+
+
+        }
+
+        if (isGroup) {
+
+
+            const newGroupConversation = await db.conversation.create({
+                data: {
+                    name,
+                    isGroup,
+                    users: {
+                        connect: [
+                            ...members.map((member: { value: string }) => ({
+                                id: member.value
+                            })),
+                            {
+                                id: session.user.id
+                            }
+                        ]
+                    }
+                },
+                include: {
+                    users: true
+                }
+            })
+
+
+            // TODO: Pusher Stuff 
+
+
+            return newGroupConversation;
+
+        }
+
 
         const existingConversation = await db.conversation.findMany({
             where: {
@@ -52,7 +97,9 @@ export default defineEventHandler(async (event) => {
                 users: true
             }
         })
-        console.log('New conversation');
+
+
+        // TODO: Pusher Stuff 
 
         return newConversation;
 

@@ -9,7 +9,12 @@ export type APIError = {
 
 }
 
+
+export type FullMessage = Message & {
+    sender: User
+}
+
 export type FullConversation = Conversation & {
     users: User[]
-    messages: Message[]
+    messages: FullMessage[]
 }

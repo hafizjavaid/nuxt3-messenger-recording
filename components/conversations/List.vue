@@ -11,7 +11,7 @@
                 <ConversationsBox v-for="item in items" :key="item.id" :conversation="item" />
             </template>
             <template v-else>
-                <Sekeleton />
+                <Skeleton />
             </template>
         </div>
 

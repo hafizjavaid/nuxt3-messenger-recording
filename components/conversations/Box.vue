@@ -39,21 +39,7 @@ const otherUser = computed(() => props.conversation.users.filter(user => user.id
 
 const handleClick = async (id: string) => {
 
-    try {
-
-        console.log(id);
-
-
-    } catch (error) {
-
-        const err = handleError(error);
-        showError(err);
-
-    } finally {
-
-        toggleLoading(false)
-    }
-
+    await navigateTo(`/conversations/${id}`)
 
 }
 

@@ -50,13 +50,23 @@ export default () => {
 
     }
 
+    const { params } = useRoute();
+
+    const conversationId = computed(() => {
+        if (!params.conversationId) {
+            return ''
+        }
+        return params.conversationId as string
+    })
+
     return {
         isLoading,
         appError,
         showMessage,
         showError,
         toggleLoading,
-        toggleError
+        toggleError,
+        conversationId
     }
 
 
