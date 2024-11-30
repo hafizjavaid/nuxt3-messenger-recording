@@ -1,10 +1,17 @@
 <template>
-    <Empty :label="'Select a user or start a new conversation'"></Empty>
+
+    <pre>
+    {{ members }}
+  </pre>
+
+    <!-- <Empty :label="'Select a user or start a new conversation'"></Empty> -->
 </template>
 
 <script setup lang="ts">
 
 const { user, clear } = useUserSession();
+
+const { members } = useActiveList();
 
 definePageMeta({
     middleware: 'protected',

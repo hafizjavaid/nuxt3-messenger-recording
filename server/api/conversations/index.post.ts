@@ -1,3 +1,4 @@
+import { pusherServer } from '~/server/utils/pusher';
 import db from '~/utils/db'
 
 
@@ -12,7 +13,7 @@ export default defineEventHandler(async (event) => {
 
         const { userId, isGroup, members, name } = await readBody(event);
 
-        console.log(members);
+        // console.log(members);
 
 
         if (isGroup && (!members || members.length < 2 || !name)) {
@@ -49,7 +50,11 @@ export default defineEventHandler(async (event) => {
             })
 
 
-            // TODO: Pusher Stuff 
+            for (const user of newGroupConversation.users) {
+                if (user.id) {
+                    await pusherServer.trigger(user.id, "conversation:new", newGroupConversation);
+                }
+            }
 
 
             return newGroupConversation;
@@ -75,7 +80,7 @@ export default defineEventHandler(async (event) => {
         })
 
         if (existingConversation.length) {
-            console.log('Existing conversation');
+            // console.log('Existing conversation');
 
             return existingConversation[0];
         }
@@ -99,7 +104,11 @@ export default defineEventHandler(async (event) => {
         })
 
 
-        // TODO: Pusher Stuff 
+        for (const user of newConversation.users) {
+            if (user.id) {
+                await pusherServer.trigger(user.id, "conversation:new", newConversation);
+            }
+        }
 
         return newConversation;
 

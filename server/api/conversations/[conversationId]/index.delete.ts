@@ -1,3 +1,4 @@
+import { pusherServer } from '~/server/utils/pusher';
 import db from '~/utils/db'
 
 
@@ -37,7 +38,11 @@ export default defineEventHandler(async (event) => {
             }
         })
 
-        // TODO: Pusher Stuff 
+        existingConversation.users.forEach(user => {
+            if (user.id) {
+                pusherServer.trigger(user.id, "conversation:remove", existingConversation);
+            }
+        })
 
         return deletedConversation;
 

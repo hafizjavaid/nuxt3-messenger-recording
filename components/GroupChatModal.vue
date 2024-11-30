@@ -82,7 +82,7 @@ const onSubmit = async () => {
 
         toggleLoading(true);
 
-        console.log(members.value);
+        // console.log(members.value);
         
 
         await $fetch('/api/conversations', {

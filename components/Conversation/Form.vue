@@ -21,9 +21,6 @@ const onImageUpload = async (img: string) => {
         image: img,
         message: message.value ? message.value : null
     });
-    refreshNuxtData('conversations');
-
-
 }
 
 const message = ref('');
@@ -42,10 +39,6 @@ const onSubmit = async () => {
     });
 
     message.value = '';
-
-    refreshNuxtData('conversations');
-
-
 }
 
 const sendMessage = async (body: any) => {

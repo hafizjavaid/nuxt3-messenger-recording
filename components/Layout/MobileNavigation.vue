@@ -18,7 +18,7 @@
 const { routes } = useRoutes();
 
 const handleClick = (item: any) => {
-    console.log(item);
+    // console.log(item);
 
     if (item.onClick) {
         return item.onClick();

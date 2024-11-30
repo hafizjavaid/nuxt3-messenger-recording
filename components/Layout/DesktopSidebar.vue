@@ -41,7 +41,7 @@ const { user } = useUserSession();
 const isOpen = ref(false);
 
 const handleClick = (item: any) => {
-    console.log(item);
+    // console.log(item);
 
     if (item.onClick) {
         return item.onClick();

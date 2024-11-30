@@ -51,7 +51,7 @@ const register = async (event: FormSubmitEvent<RegisterSchema>) => {
             method: 'POST',
             body: event.data
         })
-        console.log(user);
+        // console.log(user);
         selectedItem.value = 0;
 
 

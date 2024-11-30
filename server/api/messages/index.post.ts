@@ -1,3 +1,4 @@
+import { pusherServer } from '~/server/utils/pusher';
 import db from '~/utils/db'
 
 
@@ -52,6 +53,19 @@ export default defineEventHandler(async (event) => {
     })
 
     // TODO: Pusher Stuff 
+
+    await pusherServer.trigger(conversationId!, "messages:new", newMessage);
+
+    const lastMessage = updatedConversation.messages[updatedConversation.messages.length - 1];
+
+    updatedConversation.users.map(user => {
+        if (user.id) {
+            pusherServer.trigger(user.id, 'conversation:update', {
+                id: conversationId,
+                messages: [lastMessage]
+            })
+        }
+    })
 
 
     return newMessage;

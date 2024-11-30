@@ -7,7 +7,7 @@ export const handleError = (error: any) => {
 
     if (error.response) {
 
-        console.log(error.response);
+        // console.log(error.response);
         
         statusCode = error.response.status
         statusMessage = error.response.statusText
