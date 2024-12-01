@@ -1,7 +1,8 @@
 <template>
+
+  <ActiveStatus></ActiveStatus>
   <NuxtLayout>
     <NuxtPage></NuxtPage>
-
   </NuxtLayout>
   <UNotifications />
 </template>

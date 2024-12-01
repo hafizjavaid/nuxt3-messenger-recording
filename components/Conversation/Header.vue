@@ -34,10 +34,14 @@ const { user } = useUserSession();
 const otherUser = computed(() => props.conversation.users.filter(u => u.id !== user.value?.id))
 
 
-const isActive = computed(() => {
+const { members } = useActiveList();
 
+const isActive = computed(() => {
+    if (otherUser.value && members.value.includes(otherUser.value[0].id)) {
+        return true
+    }
     return false
-})
+});
 
 const statusText = computed(() => {
     if (props.conversation.isGroup) {

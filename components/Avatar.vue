@@ -13,7 +13,14 @@ const props = defineProps<{
     user: User | null
 }>();
 
-const isActive = computed(() => false);
+const { members } = useActiveList();
+
+const isActive = computed(() => {
+    if(props.user && members.value.includes(props.user?.id)){
+        return true
+    }
+    return false
+});
 
 </script>
 

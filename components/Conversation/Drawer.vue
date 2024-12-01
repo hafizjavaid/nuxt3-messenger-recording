@@ -21,11 +21,14 @@ const { user } = useUserSession();
 
 const otherUser = computed(() => props.conversation.users.filter(u => u.id !== user.value?.id))
 
+const { members } = useActiveList();
 
 const isActive = computed(() => {
-
+    if (otherUser.value && members.value.includes(otherUser.value[0].id)) {
+        return true
+    }
     return false
-})
+});
 
 const statusText = computed(() => {
     if (props.conversation.isGroup) {
@@ -102,7 +105,7 @@ const joinedDate = computed(() => {
                                 <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:col-span-2">
                                     {{ otherUser[0].name }}
                                 </dd>
-                                <div class="mt-2" >
+                                <div class="mt-2">
                                     <dt
                                         class="text-sm font-medium text-gray-500 dark:text-gray-300 sm:w-40 sm:flex-shrink-0">
                                         Joined
@@ -124,5 +127,5 @@ const joinedDate = computed(() => {
         </UCard>
     </USlideover>
 
-    <ConversationConfirm :isOpen="confirmOpen" @closeModal="confirmOpen = false" ></ConversationConfirm>
+    <ConversationConfirm :isOpen="confirmOpen" @closeModal="confirmOpen = false"></ConversationConfirm>
 </template>
